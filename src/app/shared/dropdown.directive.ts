@@ -5,7 +5,10 @@ import { Directive, ElementRef, HostBinding, HostListener, OnInit, Renderer2 } f
 })
 export class DropdownDirective {
   @HostBinding('class.open') isOpen = false;
-  constructor(private eleRef: ElementRef, private renderer: Renderer2) { }
+
+  @HostListener('mouseleave') onMouseLeave() {
+    this.isOpen = false;
+  }
 
   @HostListener('click') toggleOpen() {
     this.isOpen = !this.isOpen;
