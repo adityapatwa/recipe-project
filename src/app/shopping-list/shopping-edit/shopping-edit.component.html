@@ -1,22 +1,22 @@
 <div class = "row">
   <div class = "col-xs-12">
-    <form (ngSubmit) = "onAddOrEditItem()" #f = "ngForm">
+    <form #f = "ngForm" (ngSubmit) = "onAddOrEditItem()">
       <div class = "row">
         <div class = "col-sm-5 form-group">
           <label for = "name">Name</label>
-          <input type = "text" name = "name" id = "name" class = "form-control" placeholder = "Name" ngModel required>
+          <input class = "form-control" id = "name" name = "name" ngModel placeholder = "Name" required type = "text">
         </div>
         <div class = "col-sm-2 form-group">
           <label for = "amount">Amount</label>
-          <input type = "number" name = "amount" id = "amount" class = "form-control" placeholder = "Amount" ngModel
-                 pattern = "[1-9]+[0-9]*$" required>
+          <input class = "form-control" id = "amount" name = "amount" ngModel pattern = "[1-9]+[0-9]*$" placeholder = "Amount"
+                 required type = "number">
         </div>
       </div>
       <div class = "row">
         <div class = "col-xs-12 btn-toolbar">
-          <button class = "btn btn-success" [disabled] = "f.invalid">{{editMode ? 'Update' : 'Add'}}</button>
-          <button class = "btn btn-warning" type = "button" (click) = "onClear()">Clear</button>
-          <button class = "btn btn-danger" type = "button" (click) = "onDelete()" *ngIf = "editMode">Delete</button>
+          <button [disabled] = "f.invalid" class = "btn btn-success">{{editMode ? 'Update' : 'Add'}}</button>
+          <button (click) = "onClear()" class = "btn btn-warning" type = "button">Clear</button>
+          <button (click) = "onDelete()" *ngIf = "editMode" class = "btn btn-danger" type = "button">Delete</button>
         </div>
       </div>
     </form>
