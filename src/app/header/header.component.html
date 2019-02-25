@@ -17,8 +17,8 @@
           <a class = "dropdown-toggle" role = "button" style = "cursor: pointer;">Manage <span
             class = "caret"></span></a>
           <ul class = "dropdown-menu">
-            <li><a style = "cursor: pointer;"><span class = "glyphicon glyphicon-refresh"></span>  Fetch Data</a></li>
-            <li><a style = "cursor: pointer;"><span class = "glyphicon glyphicon-floppy-save"></span> Save Data</a></li>
+            <li><a style = "cursor: pointer;" (click)="onFetch()"><span class = "glyphicon glyphicon-refresh"></span>  Fetch Data</a></li>
+            <li><a style = "cursor: pointer;" (click)="onSave()"><span class = "glyphicon glyphicon-floppy-save"></span> Save Data</a></li>
           </ul>
         </li>
       </ul>
