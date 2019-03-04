@@ -25,4 +25,8 @@ export class HeaderComponent implements OnInit {
   onFetch() {
     this.dsService.getRecipes();
   }
+
+  isAuthenticated() {
+    return this.authService.isAuthenticated();
+  }
 }
