@@ -5,7 +5,6 @@ import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { AuthService } from '../auth/auth.service';
 import { RecipeService } from '../recipes/recipe.service';
-import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { DataStorageService } from '../shared/data-storage.service';
 import { AuthGuard } from '../auth/auth-guard.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -29,7 +28,6 @@ import { LoggingInterceptor } from '../shared/logging.interceptor';
     AuthGuard,
     AuthService,
     RecipeService,
-    ShoppingListService,
     DataStorageService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true}
