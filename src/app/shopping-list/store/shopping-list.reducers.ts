@@ -44,11 +44,13 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
 
     // Delete Ingredient
     case ShoppingListActions.DELETE_INGREDIENT: {
-      const ingredients = [...state.ingredients];
-      ingredients.splice(state.editedIngredientIndex, 1);
+      const oldIngredients = [...state.ingredients];
+      oldIngredients.splice(state.editedIngredientIndex, 1);
       return {
         ...state,
-        ingredients: ingredients
+        ingredients: oldIngredients,
+        editedIngredient: null,
+        editedIngredientIndex: -1
       };
     }
 
@@ -69,7 +71,9 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
 
       return {
         ...state,
-        ingredients: ingredients
+        ingredients: ingredients,
+        editedIngredient: null,
+        editedIngredientIndex: -1
       };
     }
 
@@ -80,6 +84,15 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
         ...state,
         editedIngredient,
         editedIngredientIndex: action.payLoad
+      };
+    }
+
+    // Reset the state of the shopping list component when navigating away from the Component
+    case ShoppingListActions.STOP_EDIT_INGREDIENT: {
+      return {
+        ...state,
+        editedIngredient: null,
+        editedIngredientIndex: -1
       };
     }
     default:
