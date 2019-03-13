@@ -10,12 +10,6 @@ export class DataStorageService {
   }
 
   storeRecipes() {
-    // return this.httpClient.put(
-    //   'https://ng-recipe-book-63da1.firebaseio.com/recipes.json',
-    //   this.recipeService.getRecipes(), {
-    //     params: new HttpParams().set('auth', token)
-    //   }
-    // );
     const req = new HttpRequest(
       'PUT',
       'https://ng-recipe-book-63da1.firebaseio.com/recipes.json',
