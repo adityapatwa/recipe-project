@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { map, take } from 'rxjs/operators';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { Recipe } from '../recipe.model';
 import { Ingredient } from '../../shared/ingredient.model';
-import { RecipeService } from '../recipe.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
+import * as fromRecipe from '../store/recipe.reducers';
 import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
-import * as fromApp from '../../store/app.reducers';
+import * as RecipeActions from '../store/recipe.actions';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -14,33 +15,36 @@ import * as fromApp from '../../store/app.reducers';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
-  recipe: Recipe;
-  paramSubscription: Subscription;
+  recipe: Observable<Recipe>;
   id: number;
 
   constructor(
-    private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router,
-    private shoppingListStore: Store<fromApp.AppState>
+    private store: Store<fromRecipe.RecipeState>
   ) {
   }
 
   ngOnInit() {
-    this.paramSubscription = this.route.params.subscribe((params: Params) => {
+    this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
-      this.recipe = this.recipeService.getRecipe(this.id);
+      this.recipe = this.store.select('recipes').pipe(take(1), map((recipeState: fromRecipe.State) => {
+        return recipeState.recipes[this.id];
+      }));
     });
   }
 
   onDelete() {
-    this.recipeService.delteRecipe(this.id);
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.store.dispatch(new RecipeActions.DeleteRecipe(this.id));
+    this.router.navigate(['../'], {relativeTo: this.route})
+      .catch(error => console.log(error));
   }
 
   toShoppingList() {
-    this.recipe.ingredients.forEach((ingredient: Ingredient) => {
-      this.shoppingListStore.dispatch(new ShoppingListActions.AddIngredient({...ingredient}));
+    this.recipe.subscribe((recipe) => {
+      recipe.ingredients.forEach((ingredient: Ingredient) => {
+        this.store.dispatch(new ShoppingListActions.AddIngredient({...ingredient}));
+      });
     });
   }
 
