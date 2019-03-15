@@ -19,7 +19,7 @@ import { environment } from '../environments/environment';
     AppComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({appId: 'recipe-book'}),
     HttpClientModule,
     AuthModule,
     CoreModule,
